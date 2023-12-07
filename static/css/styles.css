@@ -1,0 +1,72 @@
+/* static/styles.css */
+
+body {
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    margin: 50px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 50%;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+textarea {
+    display: flex;
+    width: 100%;
+    margin-bottom: 20px;
+    resize: none;
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:disabled {
+    background-color: #aaaaaa;
+    cursor: not-allowed;
+}
+
+button:hover:disabled {
+    background-color: #aaaaaa;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+#output_text {
+    display: flex;
+}
+
+.generated-text {
+    width: 100%;
+    height: auto;
+    margin-top: 20px;
+}
+
+#output_img {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 10px;
+}
+
+.generated-image {
+    width: 100%;
+    height: auto;
+    margin-top: 20px;
+}

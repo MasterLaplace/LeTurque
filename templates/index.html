@@ -1,0 +1,24 @@
+<!-- templates/index.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <script src="static/js/script.js"></script>
+    <link rel="icon" href="Logo.png" />
+    <title>API Form</title>
+</head>
+<body>
+    <div class="container">
+        <h1>API Form</h1>
+        <form id="openaiForm">
+            <textarea id="textInput" name="text" rows="8" placeholder="Enter your Article here..." required autofocus></textarea>
+            <button type="button" onclick="generateText()" id="submitButton">Generate Text</button>
+        </form>
+        <div id="output_text"></div>
+        <div id="output_img"></div>
+    </div>
+</body>
+</html>
