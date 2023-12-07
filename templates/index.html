@@ -7,6 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
     <script src="static/js/script.js"></script>
+    <script src="static/js/audio.js"></script>
+    <audio id="jeff" src="../includes/Jeff.mp3" preload="auto"></audio>
     <link rel="icon" href="Logo.png" />
     <title>API Form</title>
 </head>
@@ -19,6 +21,9 @@
         </form>
         <div id="output_text"></div>
         <div id="output_img"></div>
+    </div>
+    <div class="clickButton">
+        <button type="buttonEasterEgg" onclick="playSound()">click me</button>
     </div>
 </body>
 </html>

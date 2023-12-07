@@ -70,3 +70,15 @@ button:hover {
     height: auto;
     margin-top: 20px;
 }
+
+.clickButton {
+    width: 10%;
+    background-color: #000000;
+    color: white;
+    border: none;
+    cursor: pointer;
+
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
