@@ -22,8 +22,8 @@ function konamiHandler(event) {
         konamiCodePosition++;
         if (konamiCodePosition == konamiCode.length) {
             document.body.classList.add("konami");
-            document.getElementById("normalPage").style.display = "none";
-            document.getElementById("buttonSound").style.display = "none";
+            document.getElementById("articles").style.display = "none";
+            document.getElementById("conseils").style.display = "none";
             document.getElementById("greetingName").style.display = "none";
             document.getElementById("hiddenContent").style.display = "block";
             konamiCodePosition = 0;

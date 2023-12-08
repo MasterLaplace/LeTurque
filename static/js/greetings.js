@@ -14,3 +14,16 @@ document.addEventListener('DOMContentLoaded', function() {
         greetingContainer.textContent = greetings[randomGreeting];
     }
 });
+
+function showContent() {
+    const greeting = document.getElementById("greetingName");
+    window.addEventListener("scroll", function() {
+        if (window.scrollY > 0) {
+            greeting.style.display = "none";
+        } else if (window.scrollY == 0) {
+            greeting.style.display = "block";
+        }
+    });
+}
+
+window.addEventListener("load", showContent);

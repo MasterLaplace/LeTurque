@@ -14,3 +14,13 @@ function playSound() {
         clickCount = 0;
     }
 }
+
+window.addEventListener("scroll", function() {
+    const button = document.getElementById("buttonSound");
+
+    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+        button.style.bottom = "0";
+    } else {
+        button.style.bottom = "-50px";
+    }
+});

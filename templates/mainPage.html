@@ -3,6 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <script src="static/js/audio.js"></script>
+    <script src="static/js/konami.js"></script>
+    <script src="static/js/greetings.js"></script>
+    <audio id="jeff" src="../includes/Jeff.mp3" preload="auto"></audio>
     <title>Site Éducatif sur le Changement Climatique</title>
     <style>
         body {
@@ -78,17 +83,27 @@
         ul li {
             margin-bottom: 8px;
         }
+
+        body.konami {
+            background-color: #000;
+            color: #fff;:
+        }
     </style>
 </head>
 <body>
-
+    <!--Hello there-->
     <nav>
         <a href="#Main">Accueil</a>
         <a href="#articles">Articles</a>
         <a href="#conseils">Conseils</a>
         <a href="/quizz">Quiz</a>
     </nav>
+    <div class="hidden-content" id="hiddenContent">Whoa i'm shocked you found it, congratz</div>
+    <div class="greetingClas" id="greetingName">
+        <div id="greetingContainer"></div>
+    </div>
     <section id="articles">
+        <!--Hmmmm, you're a little curious, don't you?-->
         <h2>Articles</h2>
         <article>
             <h3>Quels sont les impacts du changement climatique en France ?</h3>
@@ -127,9 +142,11 @@
             <p>Le GIEC a publié le lundi 4 avril 2022 son nouveau rapport "Atténuation du changement climatique", qui présente des solutions pour réduire nos émissions de gaz à effet de serre et limiter les conséquences du changement climatique.</p>
             <a href="https://reseauactionclimat.org/6e-rapport-du-giec-quelles-solutions-face-au-changement-climatique/" target="_blank">https://reseauactionclimat.org/6e-rapport-du-giec-quelles-solutions-face-au-changement-climatique/</a>
         </article>
+        <!--What do you expect to see?-->
     </section>
 
     <section id="conseils">
+        <!--Don't waste your time, you wont see anything here-->
         <h2>Conseils</h2>
         <article>
             <h3>Attention à la consommation alimentaire</h3>
@@ -220,6 +237,10 @@
                 <li>Proposez votre temps bénévolement pour des initiatives environnementales locales.</li>
             </ul>
         </article>
+        <div class="clickButton" id="buttonSound">
+            <!--Okkkk you got it, try to play with your array-->
+            <button type="buttonEasterEgg" onclick="playSound()">click me</button>
+        </div>
     </section>
 </body>
 </html>

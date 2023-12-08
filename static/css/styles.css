@@ -78,9 +78,10 @@ button:hover {
     border: none;
     cursor: pointer;
 
-    position: absolute;
-    bottom: 0;
+    position: fixed;
+    bottom: -50px;
     right: 0;
+    transition: bottom 0.3s ease;
 }
 
 .hidden-content {
@@ -96,8 +97,8 @@ button:hover {
 .hiddenButton {
     opacity: 0;
     position: fixed;
-    top: 50%;
-    left: 60%;
+    top: 7%;
+    left: 50%;
     padding: 10px;
     background-color: #4CAF50;
     color: white;
@@ -112,7 +113,8 @@ button:hover {
 .greetingClas {
     position: fixed;
     top: 5%;
-    left: 45%;
+    left: 50%;
+    text-align: center;
     font-size: 2em;
     margin-top: 20px;
 }

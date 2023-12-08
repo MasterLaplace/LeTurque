@@ -5,7 +5,7 @@
 # Created : 2023-12-07
 # Description : Server
 
-from flask import Flask, render_template, jsonify, request
+from flask import Flask, render_template, jsonify, request, send_from_directory
 import openai
 import os
 
@@ -34,6 +34,10 @@ def get_openai_response(text: str, prompt: str)->str:
 @app.route('/')
 def index():
     return render_template('mainPage.html')
+
+@app.route('/includes/<path:filename>')
+def serve_file(filename):
+    return send_from_directory(STATIC_DIR, filename)
 
 @app.errorhandler(404)
 def page_not_found(e):
