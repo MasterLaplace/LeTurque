@@ -8,5 +8,9 @@ document.addEventListener('DOMContentLoaded', function() {
     ];
 
     const randomGreeting = Math.floor(Math.random() * greetings.length);
-    alert(greetings[randomGreeting])
+
+    const greetingContainer = document.getElementById("greetingContainer");
+    if (greetingContainer) {
+        greetingContainer.textContent = greetings[randomGreeting];
+    }
 });

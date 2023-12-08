@@ -108,3 +108,11 @@ button:hover {
 .hiddenButton:hover {
     opacity: 1;
 }
+
+.greetingClas {
+    position: fixed;
+    top: 5%;
+    left: 45%;
+    font-size: 2em;
+    margin-top: 20px;
+}
