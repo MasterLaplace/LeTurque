@@ -7,18 +7,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
     <script src="static/js/script.js"></script>
+    <script src="static/js/audio.js"></script>
+    <script src="static/js/konami.js"></script>
+    <script src="static/js/greetings.js"></script>
+    <audio id="jeff" src="../includes/Jeff.mp3" preload="auto"></audio>
     <link rel="icon" href="Logo.png" />
     <title>API Form</title>
+    <style>
+        body.konami {
+            background-color: #000;
+            color: #fff;:
+        }
+    </style>
 </head>
 <body>
-    <div class="container">
+    <!--Hello there-->
+    <div class="hidden-content" id="hiddenContent">Whoa i'm shocked you found it, congratz</div>
+    <div class="hiddenButton" id="hideButton" onmouseover="showContent()" onclick="redirectURL()">Hover over me</div>
+    <div class="greetingClas" id="greetingName">
+        <div id="greetingContainer"></div>
+    </div>
+    <div class="container" id="normalPage">
+        <!--Hmmmm, you're a little curious, don't you?-->
         <h1>API Form</h1>
         <form id="openaiForm">
             <textarea id="textInput" name="text" rows="8" placeholder="Enter your Article here..." required autofocus></textarea>
             <button type="button" onclick="generateText()" id="submitButton">Generate Text</button>
         </form>
+        <!--What do you expect to see?-->
         <div id="output_text"></div>
         <div id="output_img"></div>
+    </div>
+    <div class="clickButton" id="buttonSound">
+        <!--Don't waste your time, you wont see anything here-->
+        <button type="buttonEasterEgg" onclick="playSound()">click me</button>
+        <!--Okkkk you got it, try to play with your array-->
     </div>
 </body>
 </html>

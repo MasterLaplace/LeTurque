@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <script src="static/js/script.js"></script>
+    <title>Quizz sur le Changement Climatique</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        #quiz-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        .btn {
+            background-color: #4CAF50;
+            color: #fff;
+            padding: 10px 20px;
+            margin-top: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: #45a049;
+        }
+        .popup {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        .popup-content {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .popup-content.correct {
+            background-color: #5cb85c; /* Vert pour une réponse correcte */
+        }
+
+        .popup-content.wrong {
+            background-color: #d9534f; /* Rouge pour une réponse incorrecte */
+        }
+        #result-container {
+            text-align: center;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+    </style>
+</head>
+<body>
+    <div class="hiddenButton" id="hideButton" onmouseover="showContent()" onclick="redirectURL()">Hover over me</div>
+    <div id="result-container"></div>
+
+    <div id="popup-container" class="popup">
+        <div class="popup-content">
+            <span class="close" onclick="closePopup()">&times;</span>
+            <h2>Mauvaise réponse</h2>
+            <p id="explanation"></p>
+        </div>
+    </div>
+    <div id="quiz-container">
+        <h1>Quiz sur le Changement Climatique</h1>
+        <div id="question-container"></div>
+        <div id="answer-buttons" class="btn-container"></div>
+        <button id="next-button" class="btn" onclick="nextQuestion()">Suivant</button>
+        <div id="result-container"></div>
+    </div>
+
+    <script>
+        const questions = [
+            {
+                question: "Quel est le principal gaz à effet de serre responsable du réchauffement climatique ?",
+                answers: [
+                    { text: "Oxygène", correct: false },
+                    { text: "Méthane", correct: false },
+                    { text: "Dioxyde de carbone", correct: true },
+                    { text: "Azote", correct: false }
+                ]
+            },
+            {
+                question: "Quelle est la principale source d'émissions de dioxyde de carbone d'origine humaine ?",
+                answers: [
+                    { text: "Industrie", correct: false },
+                    { text: "Agriculture", correct: false },
+                    { text: "Transport", correct: true },
+                    { text: "Résidentiel", correct: false }
+                ]
+            },
+            {
+                question: "Que représente la consommation de viande dans les émissions de gaz à effet de serre ?",
+                answers: [
+                    { text: "Elle n'a pas d'impact significatif", correct: false },
+                    { text: "Elle contribue de manière significative aux émissions", correct: true },
+                    { text: "Elle a un impact uniquement sur la déforestation", correct: false },
+                    { text: "Je ne sais pas", correct: false }
+                ]
+            },
+            {
+                question: "Combien d'eau est nécessaire pour produire une livre de bœuf ?",
+                answers: [
+                    { text: "100 litres", correct: false },
+                    { text: "500 litres", correct: false },
+                    { text: "2000 litres", correct: true },
+                    { text: "10 litres", correct: false }
+                ]
+            },
+            {
+                question: "Quel est l'impact des voyages en avion sur les émissions de gaz à effet de serre ?",
+                answers: [
+                    { text: "Ils n'ont pas d'impact significatif", correct: false },
+                    { text: "Ils contribuent de manière significative aux émissions", correct: true },
+                    { text: "Ils ont un impact négligeable", correct: false },
+                    { text: "Je ne sais pas", correct: false }
+                ]
+            }
+        ];
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let answerButtons;
+
+        function showPopup(explanation, isCorrect) {
+            const popupContainer = document.getElementById('popup-container');
+            const explanationElement = document.getElementById('explanation');
+            const popupContent = document.querySelector('.popup-content');
+
+            explanationElement.innerText = explanation;
+
+            if (isCorrect) {
+                popupContent.classList.remove('wrong');
+                popupContent.classList.add('correct');
+            } else {
+                popupContent.classList.remove('correct');
+                popupContent.classList.add('wrong');
+            }
+
+            popupContainer.style.display = 'block';
+        }
+
+        function closePopup() {
+            const popupContainer = document.getElementById('popup-container');
+            popupContainer.style.display = 'none';
+            nextQuestion(); // Passez à la prochaine question après la fermeture de la pop-up
+        }
+
+        function startQuiz() {
+            document.getElementById('quiz-container').style.display = 'block';
+            document.getElementById('next-button').style.display = 'none';
+            answerButtons = document.getElementById('answer-buttons'); // Initialisez la variable ici
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            resetState();
+            const questionContainer = document.getElementById('question-container');
+            const resultContainer = document.getElementById('result-container');
+
+            if (currentQuestionIndex < questions.length) {
+                questionContainer.style.display = 'block';
+                resultContainer.style.display = 'none';
+                showQuestion(questions[currentQuestionIndex]);
+            } else {
+                questionContainer.style.display = 'none';
+                resultContainer.style.display = 'block';
+                showQuestion(null)
+            }
+        }
+        function showQuestion(question) {
+            const questionContainer = document.getElementById('question-container');
+            if (!question) {
+                questionContainer.innerText = '';
+                answerButtons.style.display = 'none';
+                button.style.display = 'none';
+                return;
+            }
+            questionContainer.innerText = question.question;
+
+            const answerButtons = document.getElementById('answer-buttons');
+            question.answers.forEach(answer => {
+                const button = document.createElement('button');
+                button.innerText = answer.text;
+                button.classList.add('btn');
+                button.addEventListener('click', () => selectAnswer(answer));
+                answerButtons.appendChild(button);
+            });
+        }
+
+        function resetState() {
+            clearStatusClass(document.body);
+            document.getElementById('next-button').style.display = 'none';
+            while (answerButtons.firstChild) {
+                answerButtons.removeChild(answerButtons.firstChild);
+            }
+        }
+
+        function selectAnswer(answer) {
+            const correct = answer.correct;
+            setStatusClass(document.body, correct);
+            if (correct) {
+                score++;
+            }
+            if (!correct) {
+                showPopup(`La bonne réponse est : ${getCorrectAnswerText()}. Explication : ${answer.explanation}`, false);
+            }
+
+            Array.from(answerButtons.children).forEach(button => {
+                setStatusClass(button, button.innerText === answer.text && correct);
+            });
+            document.getElementById('next-button').style.display = 'block';
+
+            // Ne déclenche showPopup que si la réponse est incorrecte
+        }
+
+        function getCorrectAnswerText() {
+            const currentQuestion = questions[currentQuestionIndex];
+            const correctAnswer = currentQuestion.answers.find(answer => answer.correct);
+            return correctAnswer.text;
+        }
+
+        function setStatusClass(element, correct) {
+            clearStatusClass(element);
+            if (correct) {
+                element.classList.add('correct');
+            } else {
+                element.classList.add('wrong');
+            }
+        }
+
+        function clearStatusClass(element) {
+            element.classList.remove('correct');
+            element.classList.remove('wrong');
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < questions.length) {
+                loadQuestion();
+            } else {
+                showResult();
+            }
+        }
+        function resetState() {
+            clearStatusClass(document.body);
+            const questionContainer = document.getElementById('question-container');
+            const answerButtons = document.getElementById('answer-buttons');
+
+            // Efface le contenu du conteneur de questions et des boutons de réponse
+            questionContainer.innerHTML = '';
+            answerButtons.innerHTML = '';
+
+            document.getElementById('next-button').style.display = 'none';
+        }
+
+        function showResult() {
+            const resultContainer = document.getElementById('result-container');
+            resetState();
+
+            resultContainer.innerHTML = `
+                <h2>Résultat</h2>
+                <p>Vous avez ${score} bonnes réponses sur ${questions.length} questions.</p>
+            `;
+            resultContainer.style.display = 'block';
+
+            // Masque le conteneur de questions
+        }
+        // Démarrez le quiz lorsque la page est chargée
+        window.onload = startQuiz;
+    </script>
+</body>
+</html>
