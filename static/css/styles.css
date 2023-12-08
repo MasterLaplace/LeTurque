@@ -118,3 +118,8 @@ button:hover {
     font-size: 2em;
     margin-top: 20px;
 }
+
+.charlieImage {
+    width: 20px;
+    height: 10px;
+}
