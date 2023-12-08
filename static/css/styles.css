@@ -92,3 +92,19 @@ button:hover {
     text-align: center;
     font-size: 1.5em;
 }
+
+.hiddenButton {
+    opacity: 0;
+    position: fixed;
+    top: 50%;
+    left: 60%;
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.hiddenButton:hover {
+    opacity: 1;
+}
