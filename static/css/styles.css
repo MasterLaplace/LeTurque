@@ -70,3 +70,7 @@ button:hover {
     height: auto;
     margin-top: 20px;
 }
+
+canvas {
+    background-color: black;
+}
